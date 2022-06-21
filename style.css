@@ -36,3 +36,7 @@ h2 {
 .expense-container {
     padding-left: 20px;
 }
+
+#income, #expense {
+    font-size: 1.3em;
+}
