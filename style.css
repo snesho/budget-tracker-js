@@ -40,3 +40,34 @@ h2 {
 #income, #expense {
     font-size: 1.3em;
 }
+
+#income {
+    color: var(--income);
+}
+
+#expense {
+    color: var(--expense);
+}
+
+#transaction {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#transaction li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+#transaction li .income-ant {
+    display: inline-block;
+    background-color: var(--income);
+    color: white;
+    padding: 5px;
+    
+
+}
