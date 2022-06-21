@@ -68,6 +68,14 @@ h2 {
     background-color: var(--income);
     color: white;
     padding: 5px;
-    
-
+    border-radius: 3px;
 }
+
+#transaction li .expense-ant {
+    display: inline-block;
+    background-color: var(--expense);
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+}
+
