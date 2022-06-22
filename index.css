@@ -79,3 +79,31 @@ h2 {
     background-color: var(--expense);
 }
 
+#transaction li button {
+    padding: 5px 10px 5px 10px;
+}
+
+.form-contianer form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-contianer form label {
+    padding-bottom: 10px;
+}
+
+.form-contianer form input {
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.form-contianer form button {
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    
+
+}
+
