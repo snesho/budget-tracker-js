@@ -60,22 +60,22 @@ h2 {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+    margin-bottom: 10px;
     box-shadow: var(--box-shadow);
 }
 
-#transaction li .income-ant {
+#transaction li span {
     display: inline-block;
-    background-color: var(--income);
     color: white;
     padding: 5px;
     border-radius: 3px;
 }
 
+#transaction li .income-ant {
+    background-color: var(--income)
+}
+
 #transaction li .expense-ant {
-    display: inline-block;
     background-color: var(--expense);
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
 }
 
