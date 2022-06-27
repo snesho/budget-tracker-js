@@ -84,9 +84,9 @@ for (var i = 0; i < state.transactions.length; i++) {
 
 
 function render() {
-    balanceEl.innerHTML = $${state.balance};
-    incomeEl.innerHTML = $${state.income};
-    expenseEl.innerHTML = $${state.expense};
+    balanceEl.innerHTML = `$${state.balance}`;
+    incomeEl.innerHTML = `$${state.income}`;
+    expenseEl.innerHTML = `$${state.expense}`;
 
     var transactionEl, containerEl, amountEl, item, btnEl;
 
@@ -105,7 +105,7 @@ transactionEl.appendChild(transactionEl);
          } else if (item.type === 'expense') {
             amountEl.classList.add('expense-amt');
          }
-         amountEl.innerHTML = $${item.amount};
+         amountEl.innerHTML = `$${item.amount}`;
 
          containerEl.appendChild(amountEl);
 
