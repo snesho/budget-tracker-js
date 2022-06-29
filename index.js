@@ -72,7 +72,7 @@ function onAddExpenseClick(){
 function onDeleteClick(event){
     var id = parseInt(event.target.getAttribute('data-id'));
     var deleteIndex;
-    for (let i = 0; i < state.transactions.length; i++) {
+    for (var i = 0; i < state.transactions.length; i++) {
         if (state.transactions[i].id === id) {
             deleteIndex = i;
             break;
@@ -121,7 +121,7 @@ function render(){
 
     transactionsEl.innerHTML = '';
 
-    for (let i = 0; i < state.transactions.length; i++) {
+    for (var i = 0; i < state.transactions.length; i++) {
         item = state.transactions[i];
         transactionEl = document.createElement('li');
         transactionEl.append(item.name);
