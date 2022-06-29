@@ -1,124 +1,156 @@
 var state = {
-    balance: 100,
+    balance: 1000,
     income: 400,
     expense: 100,
-    transactions: [
-        { name:'Salary', amount: 5000, type: 'incme'},
-        { name:' Buy Grocery', amount: 50, type: 'expense'},
-        { name:'Buy Guitar ', amount: 500, type: 'expense'},
+    transactions:[
+        // {id: uniqueId(), name: 'Salary', amount: 5000, type: 'income'},
+        // {id: uniqueId(), name: 'Buy Grocery', amount: 50, type: 'expense'},
+        // { id: uniqueId(), name: 'Buy Guitar', amount: 500, type: 'expense'}
     ]
 }
 
 var balanceEl = document.querySelector('#balance');
 var incomeEl = document.querySelector('#income');
 var expenseEl = document.querySelector('#expense');
-var transactionEl = document.querySelector('#transaction');
+var transactionsEl = document.querySelector('#transaction');
 var incomeBtnEl = document.querySelector('#incomeBtn');
 var expenseBtnEl = document.querySelector('#expenseBtn');
 var nameInputEl = document.querySelector('#name');
 var amountInputEl = document.querySelector('#amount');
 
-function init() {
+
+function init(){
+    var localState = JSON.parse(localStorage.getItem('expenseTrackerState'));
+
+    if (localState !== null) {
+        state = localState;
+    }
     updateState();
     initListeners();
+    // render();
 }
 
-function initListeners() {
+function uniqueId(){
+    return Math.round(Math.random() * 1000000);
+}
+
+function initListeners(){
     incomeBtnEl.addEventListener('click', onAddIncomeClick);
     expenseBtnEl.addEventListener('click', onAddExpenseClick);
 }
-
 // DRY - Do not repeat yourself
 
-function onAddIncomeClick() {
+function onAddIncomeClick(){
     addTransaction(nameInputEl.value, amountInputEl.value, 'income');
 }
 
-function addTransaction(name, amount, type) {
-    if (name !== '' && amount !== ''){
-        var transaction = { 
-            name: name,
-             amount: perseInt(amount), 
-             type: type
-        };
+function addTransaction(name, amount, type){
+    var name = nameInputEl.value;
+    var amount = amountInputEl.value;
+
+    if (name !== '' && amount !== '') {
+        // console.log('income', nameInputEl.value, amountInputEl.value);
+        var transaction =  {id: uniqueId(), name: name, amount: parseInt(amount), type: type};
 
         state.transactions.push(transaction);
 
+        // console.log(state);
         updateState();
-    } else {
-        alert('Please enter valid data')
     }
-}
-nameInputEl.value = '';
-amountInputEl.value = '';
- 
-function onAddIncomeClick() {
-    addTransaction(nameInputEl.value, amountInputEl.value, 'expense')
+    else{
+        alert("Please enter valid data");
+    }
+
+    nameInputEl.value = '';
+    amountInputEl.value = '';
 }
 
-function updateState() {
+function onAddExpenseClick(){
+    addTransaction(nameInputEl.value, amountInputEl.value, 'expense');
+}
+
+function onDeleteClick(event){
+    var id = parseInt(event.target.getAttribute('data-id'));
+    var deleteIndex;
+    for (let i = 0; i < state.transactions.length; i++) {
+        if (state.transactions[i].id === id) {
+            deleteIndex = i;
+            break;
+        }
+    }
+
+    state.transactions.splice(deleteIndex, 1);
+
+    updateState();
+}
+
+function updateState(){
     var balance = 0,
-        income = 0,
-        expense = 0,
-        item;
+    income = 0,
+    expense = 0,
+    item;
 
-for (var i = 0; i < state.transactions.length; i++) {
+    for (var i = 0; i < state.transactions.length; i++) {
         item = state.transactions[i];
 
-    if (item.type === 'income') {
-        income += item.amount;
-      } else if (item.type === 'expense') {
-        expense += item.amount;
-      }
+        if (item.type === 'income') {
+            income += item.amount;
+        }
+        else if (item.type === 'expense') {
+            expense += item.amount;
+        }
     }
 
     balance = income - expense;
 
+    // console.log(balance, income, expense);
     state.balance = balance;
-    state.balance = income;
-    state.balance = expense;
+    state.income = income;
+    state.expense = expense;
+
+    localStorage.setItem('expenseTrackerState', JSON.stringify(state));
 
     render();
-
 }
-
-
-function render() {
-    balanceEl.innerHTML = `$${state.balance}`;
-    incomeEl.innerHTML = `$${state.income}`;
-    expenseEl.innerHTML = `$${state.expense}`;
+function render(){
+    balanceEl.innerHTML = `R${state.balance}`;
+    incomeEl.innerHTML = `R${state.income}`;
+    expenseEl.innerHTML = `R${state.expense}`;
 
     var transactionEl, containerEl, amountEl, item, btnEl;
 
-    transactionEl.innerHTML = '';
+    transactionsEl.innerHTML = '';
 
-    for (var i = 0; i < state.transactions.length; i++){
-         item = state.transactions[i];
-         transactionEl = document.createElement('li');
-         transactionEl.append(item.name);
-transactionEl.appendChild(transactionEl);
+    for (let i = 0; i < state.transactions.length; i++) {
+        item = state.transactions[i];
+        transactionEl = document.createElement('li');
+        transactionEl.append(item.name);
 
-         containerEl = document.createElement('div');
-         amountEl = document.createElement('span');
-         if (item.type === 'income') {
+        transactionsEl.appendChild(transactionEl);
+
+        containerEl = document.createElement('div');
+        amountEl = document.createElement('span');
+        if (item.type === 'income') {
             amountEl.classList.add('income-amt');
-         } else if (item.type === 'expense') {
+        }
+        else if (item.type === 'expense') {
             amountEl.classList.add('expense-amt');
-         }
-         amountEl.innerHTML = `$${item.amount}`;
+        }
+        amountEl.innerHTML = `R${item.amount}`;
 
-         containerEl.appendChild(amountEl);
+        containerEl.appendChild(amountEl);
 
-         btnEl = document.createElement('button');
-         btnEl.innerHTML = 'X';
-
+        btnEl = document.createElement('button');
+        btnEl.setAttribute('data-id', item.id);
+        btnEl.innerHTML = 'X';
 
         btnEl.addEventListener('click', onDeleteClick);
 
-         containerEl.appendChild(btnEl);
+        containerEl.appendChild(btnEl);
 
-         transactionEl.appendChild(containerEl);
+        transactionEl.appendChild(containerEl);
     }
 }
- 
+
+
 init();
