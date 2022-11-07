@@ -5,7 +5,7 @@ var state = {
     transactions:[
         // {id: uniqueId(), name: 'Salary', amount: 5000, type: 'income'},
         // {id: uniqueId(), name: 'Buy Grocery', amount: 50, type: 'expense'},
-        // { id: uniqueId(), name: 'Buy Guitar', amount: 500, type: 'expense'}
+        // {id: uniqueId(), name: 'Buy Guitar', amount: 500, type: 'expense'}
     ]
 }
 
@@ -38,7 +38,7 @@ function initListeners(){
     incomeBtnEl.addEventListener('click', onAddIncomeClick);
     expenseBtnEl.addEventListener('click', onAddExpenseClick);
 }
-// DRY - Do not repeat yourself
+
 
 function onAddIncomeClick(){
     addTransaction(nameInputEl.value, amountInputEl.value, 'income');
@@ -151,6 +151,5 @@ function render(){
         transactionEl.appendChild(containerEl);
     }
 }
-
 
 init();
